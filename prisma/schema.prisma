@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
 }
 
 model Donor {
@@ -35,18 +34,18 @@ enum Status {
 }
 
 model Blog {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  title      String
-  content    String
-  imageUrl   String?
-  author     String   @default("Admin")
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  imageUrl  String?
+  author    String   @default("Admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model GalleryItem {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  title      String?
-  imageUrl   String
-  createdAt  DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String?
+  imageUrl  String
+  createdAt DateTime @default(now())
 }
