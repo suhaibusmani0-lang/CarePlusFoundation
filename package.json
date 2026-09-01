@@ -11,9 +11,13 @@
   },
   "dependencies": {
     "@prisma/client": "^7.10.0",
+    "@prisma/composer": "0.16.0",
+    "@prisma/composer-prisma-cloud": "0.16.0",
+    "alchemy": "2.0.0-beta.74",
     "@prisma/extension-accelerate": "^3.0.1",
     "cloudinary": "^2.11.0",
     "clsx": "^2.1.0",
+    "effect": "4.0.0-rc.112",
     "framer-motion": "^13.1.1",
     "jspdf": "^2.5.2",
     "lucide-react": "^0.368.0",
@@ -33,9 +37,18 @@
     "@types/react-dom": "^18.2.25",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
-    "prisma": "^8.0.0-rc.12",
+    "prisma": "8.0.0-rc.12",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5",
     "wrangler": "^4.128.0"
+  },
+  "overrides": {
+    "@effect/platform-bun": "4.0.0-rc.112",
+    "@effect/platform-node": "4.0.0-rc.112",
+    "@effect/platform-node-shared": "4.0.0-rc.112",
+    "@effect/sql-d1": "4.0.0-rc.112",
+    "@effect/sql-pg": "4.0.0-rc.112",
+    "@effect/vitest": "4.0.0-rc.112",
+    "effect": "4.0.0-rc.112"
   }
 }
