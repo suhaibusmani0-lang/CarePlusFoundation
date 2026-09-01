@@ -22,4 +22,7 @@ export default {
     },
   },
   dangerouslyUseUnsupportedNextVersion: true,
+  dangerous: {
+    externalDependencies: ["@prisma/client"],
+  },
 };
