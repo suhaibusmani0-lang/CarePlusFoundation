@@ -1,10 +1,9 @@
-import { PrismaClient } from '@prisma/client/edge'
+import { PrismaClient } from '@prisma/client'
 import { withAccelerate } from '@prisma/extension-accelerate'
 
 const prismaClientSingleton = () => {
   return new PrismaClient({
-    // Fallback URL added to bypass Cloudflare build-time undefined variables
-    accelerateUrl: process.env.DATABASE_URL || "prisma://accelerate.prisma-data.net/?api_key=build_bypass_key"
+    accelerateUrl: process.env.DATABASE_URL
   }).$extends(withAccelerate())
 }
 
