@@ -106,12 +106,15 @@ export default function Footer() {
           <p className="text-gray-400 text-sm">
             &copy; {new Date().getFullYear()} Care Plus Foundation Trust. All rights reserved.
           </p>
+          <p className="text-gray-400 text-sm text-center">
+            Developed by <a href="http://www.zarnetic.com" target="_blank" rel="noopener noreferrer" className="text-[#b8860b] hover:text-[#daa520] font-bold transition-colors underline decoration-1 underline-offset-2">Zarnetic</a>
+          </p>
           <div className="flex space-x-6 text-sm text-gray-400">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
             <Link href="/admin/login" className="hover:text-white transition-colors opacity-50 hover:opacity-100 flex items-center">
               <span className="w-1.5 h-1.5 bg-[#b8860b] rounded-full mr-2"></span>
-              Admin Login
+              Admin
             </Link>
           </div>
         </div>
