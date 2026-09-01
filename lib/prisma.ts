@@ -1,11 +1,19 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client/edge'
+import { withAccelerate } from '@prisma/extension-accelerate'
+
+const prismaClientSingleton = () => {
+  return new PrismaClient({
+    // Fallback URL added to bypass Cloudflare build-time undefined variables
+    accelerateUrl: process.env.DATABASE_URL || "prisma://accelerate.prisma-data.net/?api_key=build_bypass_key"
+  }).$extends(withAccelerate())
+}
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
+  prisma: ReturnType<typeof prismaClientSingleton> | undefined;
+}
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+export default prisma
 
-export default prisma;
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
