@@ -31,14 +31,20 @@ export default function Footer() {
               Quick Links
             </h3>
             <ul className="space-y-3">
-              {['Home', 'About Us', 'Blogs', 'Gallery', 'Donate Now'].map((item) => (
-                <li key={item}>
+              {[
+                { name: 'Home', href: '/' },
+                { name: 'About Us', href: '/about' },
+                { name: 'Blogs', href: '/blogs' },
+                { name: 'Gallery', href: '/gallery' },
+                { name: 'Donate Now', href: '/donate' }
+              ].map((item) => (
+                <li key={item.name}>
                   <Link 
-                    href={item === 'Home' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`} 
+                    href={item.href} 
                     className="text-gray-300 hover:text-[#b8860b] transition-colors flex items-center group"
                   >
                     <span className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 mr-2 text-[#b8860b]">›</span>
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}
