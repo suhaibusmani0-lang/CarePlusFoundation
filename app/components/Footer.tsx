@@ -99,8 +99,13 @@ export default function Footer() {
             </form>
             
             <div className="flex space-x-4">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
-                <a key={i} href="#" className="bg-white/10 p-2.5 rounded-full hover:bg-[#b8860b] hover:scale-110 transition-all duration-300 text-gray-300 hover:text-white">
+              {[
+                { Icon: Facebook, label: 'Facebook' },
+                { Icon: Twitter, label: 'Twitter' },
+                { Icon: Instagram, label: 'Instagram' },
+                { Icon: Linkedin, label: 'LinkedIn' }
+              ].map(({ Icon, label }, i) => (
+                <a key={i} href="#" aria-label={label} className="bg-white/10 p-2.5 rounded-full hover:bg-[#b8860b] hover:scale-110 transition-all duration-300 text-gray-300 hover:text-white">
                   <Icon size={18} />
                 </a>
               ))}

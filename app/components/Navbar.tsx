@@ -13,7 +13,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between min-h-[6rem] items-center py-2">
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/">
+            <Link href="/" aria-label="Home">
               <motion.div
                 initial={{ y: -50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -42,7 +42,7 @@ export default function Navbar() {
           </div>
 
           <div className="md:hidden flex items-center">
-            <button onClick={() => setIsOpen(!isOpen)} className="text-gray-700 hover:text-[#0f4a5c]">
+            <button onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? "Close menu" : "Open menu"} className="text-gray-700 hover:text-[#0f4a5c]">
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
