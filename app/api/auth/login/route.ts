@@ -6,7 +6,8 @@ export async function POST(request: Request) {
     const { email, password } = await request.json();
 
     if (email === 'careplusfoundation19@gmail.com' && password === 'Care786@@') {
-      cookies().set('admin_session', 'true', {
+      const cookieStore = await cookies();
+      cookieStore.set('admin_session', 'true', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
