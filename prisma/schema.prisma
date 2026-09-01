@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Donor {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  email      String
+  phone      String
+  pan_number String?
+  donations  Donation[]
+  created_at DateTime   @default(now())
+}
+
+model Donation {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  donor_id            String   @db.ObjectId
+  donor               Donor    @relation(fields: [donor_id], references: [id])
+  amount              Float
+  razorpay_order_id   String   @unique
+  razorpay_payment_id String?  @unique
+  status              Status   @default(PENDING)
+  created_at          DateTime @default(now())
+}
+
+enum Status {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+model Blog {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  content    String
+  imageUrl   String?
+  author     String   @default("Admin")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model GalleryItem {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  title      String?
+  imageUrl   String
+  createdAt  DateTime @default(now())
+}
