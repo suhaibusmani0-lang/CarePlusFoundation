@@ -56,13 +56,13 @@ export default function Navbar() {
       </div>
 
       {isOpen && (
-        <div className="md:hidden bg-white px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-lg absolute w-full">
-          <Link href="/" className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">Home</Link>
-          <Link href="/about" className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">About Us</Link>
-          <Link href="/blogs" className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">Blogs</Link>
-          <Link href="/gallery" className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">Gallery</Link>
-          <Link href="/contact" className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">Contact Us</Link>
-          <Link href="/donate" className="block px-3 py-2">
+        <div className="md:hidden bg-white px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-lg absolute w-full left-0 border-b border-gray-100">
+          <Link href="/" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">Home</Link>
+          <Link href="/about" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">About Us</Link>
+          <Link href="/blogs" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">Blogs</Link>
+          <Link href="/gallery" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">Gallery</Link>
+          <Link href="/contact" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">Contact Us</Link>
+          <Link href="/donate" onClick={() => setIsOpen(false)} className="block px-3 py-2">
             <button className="w-full bg-gradient-to-r from-[#b8860b] to-[#daa520] text-white px-6 py-2 rounded-full font-semibold">
               Donate Now
             </button>

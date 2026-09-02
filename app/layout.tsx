@@ -52,9 +52,9 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/logo.png" />
       </head>
-      <body className="min-h-screen flex flex-col bg-white">
+      <body className="min-h-screen flex flex-col bg-white overflow-x-hidden w-full max-w-[100vw]">
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow w-full overflow-hidden">
           {children}
         </main>
         <Footer />
