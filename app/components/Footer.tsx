@@ -22,7 +22,7 @@ export default function Footer() {
           {/* About Column */}
           <div className="space-y-6">
             <div className="bg-white/95 p-4 rounded-2xl inline-block shadow-lg backdrop-blur-sm border border-white/20">
-              <Image src="/logo-new.png" alt="Care Plus Foundation Logo" width={250} height={80} className="w-[180px] h-auto" />
+              <Image src="/careplus-logo.jpg" alt="Care Plus Foundation Logo" width={250} height={80} className="w-[180px] h-auto" />
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
               Working towards education, health, and empowerment. Together, We Create Change.
