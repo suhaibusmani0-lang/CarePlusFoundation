@@ -58,7 +58,7 @@ export default function HeroSection() {
         >
           <div className="absolute inset-0 bg-white/20 blur-[60px] rounded-full"></div>
           <Image 
-            src="/careplus-logo.jpg" 
+            src="/careplus-logo-final.png" 
             alt="Care Plus Foundation" 
             width={800} 
             height={400} 

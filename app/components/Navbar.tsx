@@ -25,7 +25,7 @@ export default function Navbar() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, type: 'spring', bounce: 0.4 }}
               >
-                <Image src="/careplus-logo.jpg" alt="Care Plus Foundation Logo" width={600} height={400} className="h-20 sm:h-24 w-auto object-contain py-2" priority />
+                <Image src="/careplus-logo-final.png" alt="Care Plus Foundation Logo" width={600} height={400} className="h-20 sm:h-24 w-auto object-contain py-2" priority />
               </motion.div>
             </Link>
           </div>

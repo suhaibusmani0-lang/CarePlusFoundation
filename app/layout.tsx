@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     siteName: "Care Plus Foundation",
     images: [
       {
-        url: "/careplus-logo.jpg",
+        url: "/careplus-logo-final.png",
         width: 800,
         height: 600,
         alt: "Care Plus Foundation",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Care Plus Foundation Trust | Together, We Create Change",
     description: "Empowering communities through education, health, and collective action.",
-    images: ["/careplus-logo.jpg"],
+    images: ["/careplus-logo-final.png"],
   },
   robots: {
     index: true,
@@ -50,7 +50,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/careplus-logo.jpg" />
+        <link rel="icon" href="/careplus-logo-final.png" />
       </head>
       <body className="min-h-screen flex flex-col bg-white overflow-x-hidden w-full max-w-[100vw]">
         <Navbar />
