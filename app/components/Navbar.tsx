@@ -4,9 +4,15 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">

@@ -40,3 +40,26 @@ export async function DELETE(
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const { title, imageUrl } = await req.json();
+
+    const updatedItem = await prisma.galleryItem.update({
+      where: { id },
+      data: {
+        ...(title !== undefined && { title }),
+        ...(imageUrl !== undefined && { imageUrl }),
+      },
+    });
+
+    return NextResponse.json(updatedItem);
+  } catch (error: any) {
+    console.error('Error updating gallery item:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}

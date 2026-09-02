@@ -2,18 +2,20 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Search, Plus, Trash2, Loader2, Image as ImageIcon } from "lucide-react";
+import { Search, Plus, Trash2, Loader2, Image as ImageIcon, Edit2, X } from "lucide-react";
 import Image from "next/image";
 
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   
   // Form State
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [file, setFile] = useState<File | null>(null);
+  const [existingImageUrl, setExistingImageUrl] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -32,6 +34,24 @@ export default function BlogsPage() {
     }
   };
 
+  const handleEdit = (blog: any) => {
+    setEditingId(blog.id);
+    setTitle(blog.title);
+    setContent(blog.content);
+    setExistingImageUrl(blog.imageUrl || '');
+    setFile(null);
+    setShowForm(true);
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+    setEditingId(null);
+    setTitle('');
+    setContent('');
+    setFile(null);
+    setExistingImageUrl('');
+  };
+
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this blog?')) return;
     try {
@@ -46,9 +66,9 @@ export default function BlogsPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      let imageUrl = '';
+      let finalImageUrl = existingImageUrl;
       
-      // Upload image first if exists
+      // Upload new image if exists
       if (file) {
         const formData = new FormData();
         formData.append('file', file);
@@ -57,26 +77,25 @@ export default function BlogsPage() {
           body: formData
         });
         const uploadData = await uploadRes.json();
-        imageUrl = uploadData.url;
+        finalImageUrl = uploadData.url;
       }
 
-      // Create blog
-      const res = await fetch('/api/blogs', {
-        method: 'POST',
+      const method = editingId ? 'PUT' : 'POST';
+      const url = editingId ? `/api/blogs/${editingId}` : '/api/blogs';
+
+      const res = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, content, imageUrl, author: 'Admin' })
+        body: JSON.stringify({ title, content, imageUrl: finalImageUrl, author: 'Admin' })
       });
       
       if (res.ok) {
-        setShowForm(false);
-        setTitle('');
-        setContent('');
-        setFile(null);
+        handleCancel();
         fetchBlogs();
       }
     } catch (error) {
       console.error(error);
-      alert('Failed to add blog');
+      alert('Failed to save blog');
     } finally {
       setSubmitting(false);
     }
@@ -95,10 +114,10 @@ export default function BlogsPage() {
           />
         </div>
         <button 
-          onClick={() => setShowForm(!showForm)}
+          onClick={showForm ? handleCancel : () => setShowForm(true)}
           className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-[#0f4a5c] text-white rounded-xl hover:bg-[#0f4a5c]/90 transition-colors"
         >
-          <Plus size={18} />
+          {showForm ? <X size={18} /> : <Plus size={18} />}
           <span>{showForm ? 'Cancel' : 'New Post'}</span>
         </button>
       </div>
@@ -110,7 +129,7 @@ export default function BlogsPage() {
           onSubmit={handleSubmit}
           className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4"
         >
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Create New Blog</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-4">{editingId ? 'Edit Blog' : 'Create New Blog'}</h3>
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
@@ -124,19 +143,43 @@ export default function BlogsPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Cover Image (Optional)</label>
-            <div className="flex items-center justify-center w-full">
-              <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100">
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <ImageIcon className="w-8 h-8 text-gray-400 mb-2" />
-                  <p className="text-sm text-gray-500">{file ? file.name : "Click to upload image"}</p>
-                </div>
-                <input type="file" className="hidden" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-              </label>
+            <div className="flex items-center gap-4">
+              <div className="flex-1">
+                <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100">
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <ImageIcon className="w-8 h-8 text-gray-400 mb-2" />
+                    <p className="text-sm text-gray-500">{file ? file.name : (existingImageUrl ? "Click to change image" : "Click to upload image")}</p>
+                  </div>
+                  <input type="file" className="hidden" accept="image/*" onChange={(e) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                       setFile(e.target.files[0]);
+                       setExistingImageUrl('');
+                    }
+                  }} />
+                </label>
+              </div>
+              
+              {(file || existingImageUrl) && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFile(null);
+                    setExistingImageUrl('');
+                  }}
+                  className="p-3 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-colors flex items-center justify-center"
+                  title="Remove image"
+                >
+                  <Trash2 size={24} />
+                </button>
+              )}
             </div>
+            {(existingImageUrl && !file) && (
+                <div className="mt-2 text-sm text-green-600">Current image is set.</div>
+            )}
           </div>
 
           <button disabled={submitting} type="submit" className="w-full py-3 bg-[#b8860b] text-white rounded-xl font-bold hover:bg-[#daa520] transition-colors flex items-center justify-center">
-            {submitting ? <Loader2 className="animate-spin w-5 h-5" /> : 'Publish Blog'}
+            {submitting ? <Loader2 className="animate-spin w-5 h-5" /> : (editingId ? 'Update Blog' : 'Publish Blog')}
           </button>
         </motion.form>
       )}
@@ -179,6 +222,9 @@ export default function BlogsPage() {
                       {new Date(blog.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-right">
+                      <button onClick={() => handleEdit(blog)} className="p-2 mr-2 text-gray-400 hover:text-[#0f4a5c] rounded-lg hover:bg-blue-50 transition-colors">
+                        <Edit2 size={18} />
+                      </button>
                       <button onClick={() => handleDelete(blog.id)} className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors">
                         <Trash2 size={18} />
                       </button>

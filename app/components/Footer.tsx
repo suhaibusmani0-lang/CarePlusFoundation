@@ -1,8 +1,17 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, MapPin } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   return (
     <footer className="bg-gradient-to-br from-[#0a313d] via-[#0f4a5c] to-[#0a313d] text-white pt-20 pb-8 border-t border-[#b8860b]/20 relative overflow-hidden">
       {/* Decorative gradient overlay */}
