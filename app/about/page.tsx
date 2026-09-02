@@ -90,13 +90,10 @@ export default function AboutPage() {
             {/* President */}
             <div className="group relative bg-white rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-500 p-6 flex items-center gap-6 border border-gray-100 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-[#0f4a5c]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden shadow-lg border-4 border-white flex-shrink-0 z-10">
-                <Image 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&q=80&fit=crop" 
-                  alt="Lata Kumari" 
-                  fill 
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden shadow-sm border-4 border-gray-50 flex-shrink-0 z-10 bg-gray-100 flex items-center justify-center text-gray-400">
+                <svg className="w-16 h-16 md:w-20 md:h-20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
               </div>
               <div className="relative z-10">
                 <p className="text-sm font-bold text-[#b8860b] uppercase tracking-widest mb-1">President</p>
@@ -108,13 +105,10 @@ export default function AboutPage() {
             {/* Trustee */}
             <div className="group relative bg-white rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-500 p-6 flex items-center gap-6 border border-gray-100 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-[#b8860b]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden shadow-lg border-4 border-white flex-shrink-0 z-10">
-                <Image 
-                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&q=80&fit=crop" 
-                  alt="Mukesh" 
-                  fill 
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden shadow-sm border-4 border-gray-50 flex-shrink-0 z-10 bg-gray-100 flex items-center justify-center text-gray-400">
+                <svg className="w-16 h-16 md:w-20 md:h-20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
               </div>
               <div className="relative z-10">
                 <p className="text-sm font-bold text-[#b8860b] uppercase tracking-widest mb-1">Trustee</p>
