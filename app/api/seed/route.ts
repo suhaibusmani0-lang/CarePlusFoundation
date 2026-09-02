@@ -51,15 +51,15 @@ export async function GET() {
           name: names[i],
           email: `${names[i].split(' ')[0].toLowerCase()}@example.com`,
           phone: `98765${Math.floor(10000 + Math.random() * 90000)}`,
-          panNumber: `ABCDE${1234 + i}F`,
+          pan_number: `ABCDE${1234 + i}F`,
         }
       });
       await prisma.donation.create({
         data: {
-          donorId: donor.id,
+          donor_id: donor.id,
           amount: (i + 1) * 1100,
-          razorpayOrderId: `order_realngo_${i}_${Date.now()}`,
-          razorpayPaymentId: `pay_realngo_${i}_${Date.now()}`,
+          razorpay_order_id: `order_realngo_${i}_${Date.now()}`,
+          razorpay_payment_id: `pay_realngo_${i}_${Date.now()}`,
           status: 'SUCCESS',
         }
       });
