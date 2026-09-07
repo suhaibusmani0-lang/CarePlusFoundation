@@ -2,8 +2,8 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { jsPDF } from 'jspdf';
 import { motion } from 'framer-motion';
+import { generateReceipt } from '@/lib/generate-receipt';
 
 function SuccessContent() {
   const searchParams = useSearchParams();
@@ -19,67 +19,22 @@ function SuccessContent() {
     setDetails({ donorName, email, amount, paymentId, panNumber, date: new Date().toLocaleDateString() });
   }, [searchParams]);
 
-  const generate80GReceipt = () => {
+  const handleDownload = async () => {
     if (!details) return;
-    const doc = new jsPDF();
-    
-    // Header
-    doc.setFontSize(22);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(15, 74, 92);
-    doc.text('CARE PLUS FOUNDATION TRUST', 105, 20, { align: 'center' });
-    
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(100);
-    doc.text('B-6 FIRST FLOOR KALKAJI NEW DELHI-110019, Delhi Cantonment', 105, 28, { align: 'center' });
-    doc.text('Email: careplusfoundation19@gmail.com', 105, 34, { align: 'center' });
-    
-    doc.setDrawColor(200);
-    doc.line(20, 40, 190, 40);
-    
-    // Title
-    doc.setFontSize(16);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0);
-    doc.text('DONATION RECEIPT (80G)', 105, 50, { align: 'center' });
-    
-    // Details
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-    
-    const leftCol = 25;
-    const rightCol = 80;
-    let y = 70;
-    
-    doc.text('Receipt No:', leftCol, y); doc.setFont("helvetica", "bold"); doc.text(`RCPT-${details.paymentId}`, rightCol, y); doc.setFont("helvetica", "normal");
-    y += 10;
-    doc.text('Date:', leftCol, y); doc.setFont("helvetica", "bold"); doc.text(details.date, rightCol, y); doc.setFont("helvetica", "normal");
-    y += 10;
-    doc.text('Received with thanks from:', leftCol, y); doc.setFont("helvetica", "bold"); doc.text(details.donorName.toUpperCase(), rightCol, y); doc.setFont("helvetica", "normal");
-    y += 10;
-    doc.text('Amount:', leftCol, y); doc.setFont("helvetica", "bold"); doc.text(`Rs. ${details.amount}/-`, rightCol, y); doc.setFont("helvetica", "normal");
-    y += 10;
-    doc.text('PAN Number:', leftCol, y); doc.setFont("helvetica", "bold"); doc.text(details.panNumber.toUpperCase(), rightCol, y); doc.setFont("helvetica", "normal");
-    
-    // Footer Box
-    y += 20;
-    doc.setDrawColor(184, 134, 11);
-    doc.setFillColor(250, 250, 250);
-    doc.rect(20, y, 170, 50, 'FD');
-    
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "bold");
-    doc.text('Trust Registration Info:', 25, y + 10);
-    doc.setFont("helvetica", "normal");
-    doc.text('Reg No: 2026/10/IV/1162', 25, y + 20);
-    doc.text('DARPAN ID: DL/2026/1190987', 25, y + 28);
-    
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "italic");
-    doc.text('Note: Donations to Care Plus Foundation Trust are exempt under section 80G of the IT Act.', 25, y + 42);
-    
-    doc.save(`CarePlus_80G_Receipt_${details.paymentId}.pdf`);
+    try {
+      await generateReceipt({
+        donationId: details.paymentId,
+        donorName: details.donorName,
+        donorEmail: details.email,
+        amount: Number(details.amount),
+        paymentId: details.paymentId,
+        donorPan: details.panNumber,
+        date: details.date,
+      });
+    } catch (e) {
+      console.error("Error generating receipt", e);
+      alert("Failed to generate receipt. Please try again.");
+    }
   };
 
   if (!details) return null;
@@ -115,7 +70,7 @@ function SuccessContent() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button 
-            onClick={generate80GReceipt}
+            onClick={handleDownload}
             className="px-8 py-3 bg-[#0f4a5c] text-white font-bold rounded-full hover:bg-[#0a3644] transition-colors shadow-lg flex items-center justify-center"
           >
             <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
