@@ -49,21 +49,27 @@ export default function DonationForm() {
       const response = await fetch('/api/razorpay/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: parseInt(formData.amount) })
+        body: JSON.stringify({ 
+          amount: parseInt(formData.amount),
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          pan_number: formData.panNumber
+        })
       });
       
       const orderData = await response.json();
       
-      if (!response.ok) throw new Error(orderData.message || 'Failed to create order');
+      if (!response.ok) throw new Error(orderData.error || orderData.message || 'Failed to create order');
 
       // 2. Initialize Razorpay
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        amount: orderData.amount,
-        currency: orderData.currency,
+        amount: orderData.order.amount,
+        currency: orderData.order.currency,
         name: 'Care Plus Foundation',
         description: 'Donation',
-        order_id: orderData.id,
+        order_id: orderData.order.id,
         handler: async function (response: any) {
           try {
             // 3. Verify payment
