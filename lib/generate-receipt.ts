@@ -93,6 +93,32 @@ export async function generateReceipt(
   const mutedGray = [100, 116, 139];
   const lightBg = [244, 249, 250];
 
+  let base64Logo = '';
+  try {
+    if (typeof window !== 'undefined') {
+      const response = await fetch('/careplus-logo-final.png');
+      const blob = await response.blob();
+      base64Logo = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.readAsDataURL(blob);
+      });
+    }
+  } catch (e) {
+    console.warn("Could not load logo for PDF", e);
+  }
+
+  // Watermark
+  if (base64Logo) {
+    try {
+      doc.setGState(new (doc as any).GState({ opacity: 0.08 }));
+      doc.addImage(base64Logo, 'PNG', (pageWidth - 140) / 2, (pageHeight - 140) / 2 + 10, 140, 140);
+      doc.setGState(new (doc as any).GState({ opacity: 1 }));
+    } catch (e) {
+      console.warn("Could not apply watermark opacity", e);
+    }
+  }
+
   // Outer decorative border
   doc.setDrawColor(teal[0], teal[1], teal[2]);
   doc.setLineWidth(1.2);
@@ -107,35 +133,42 @@ export async function generateReceipt(
   doc.setFillColor(teal[0], teal[1], teal[2]);
   doc.rect(margin + 3, margin + 3, pageWidth - (margin + 3) * 2, 38, 'F');
 
+  // Header Logo
+  if (base64Logo) {
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(margin + 6, margin + 6, 30, 30, 2, 2, 'F');
+    doc.addImage(base64Logo, 'PNG', margin + 8, margin + 8, 26, 26);
+  }
+
   // Header Text
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
-  doc.text('CARE PLUS FOUNDATION TRUST', pageWidth / 2, margin + 14, { align: 'center' });
+  doc.text('CARE PLUS FOUNDATION TRUST', pageWidth / 2 + 10, margin + 14, { align: 'center' });
 
   doc.setFont('helvetica', 'italic');
   doc.setFontSize(10);
   doc.setTextColor(230, 200, 120);
-  doc.text('"Together, We Create Change"', pageWidth / 2, margin + 20, { align: 'center' });
+  doc.text('"Together, We Create Change"', pageWidth / 2 + 10, margin + 20, { align: 'center' });
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
   doc.setTextColor(235, 245, 250);
   doc.text(
-    'Registered under The Charitable and Religious Trust Act, 1920 | Reg No: 2026/10/IV/1162 (Sub-Registrar Delhi)',
-    pageWidth / 2,
+    'Registered under The Charitable and Religious Trust Act, 1920 | Reg No: 2026/10/IV/1162',
+    pageWidth / 2 + 10,
     margin + 27,
     { align: 'center' }
   );
   doc.text(
     'DARPAN ID: DL/2026/1190987 | Email: careplusfoundation19@gmail.com',
-    pageWidth / 2,
+    pageWidth / 2 + 10,
     margin + 32,
     { align: 'center' }
   );
   doc.text(
-    'Address: B-6 FIRST FLOOR KALKAJI NEW DELHI-110019, Delhi Cantonment',
-    pageWidth / 2,
+    'Address: B-6 FIRST FLOOR KALKAJI NEW DELHI-110019',
+    pageWidth / 2 + 10,
     margin + 37,
     { align: 'center' }
   );
