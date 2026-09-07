@@ -19,7 +19,7 @@ export async function GET() {
     const totalBlogs = await prisma.blog.count();
 
     // 4. Gallery Items
-    const totalGalleryItems = await prisma.gallery.count();
+    const totalGalleryItems = await prisma.galleryItem.count();
 
     // 5. Recent Donations
     const recentDonations = await prisma.donation.findMany({
@@ -46,3 +46,4 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
