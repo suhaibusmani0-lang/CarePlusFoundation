@@ -1,21 +1,41 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Heart, FileText, ImageIcon, IndianRupee } from "lucide-react";
+import { Heart, FileText, ImageIcon, IndianRupee, Loader2 } from "lucide-react";
 
 export default function AdminDashboard() {
-  const stats = [
-    { name: "Total Donations", value: "₹4,50,000", icon: IndianRupee, color: "bg-emerald-50 text-emerald-600" },
-    { name: "Supporters", value: "1,245", icon: Heart, color: "bg-rose-50 text-rose-600" },
-    { name: "Published Blogs", value: "24", icon: FileText, color: "bg-blue-50 text-blue-600" },
-    { name: "Gallery Items", value: "156", icon: ImageIcon, color: "bg-purple-50 text-purple-600" },
-  ];
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  const recentDonations = [
-    { id: 1, name: "Rahul Sharma", amount: "₹5,000", date: "Today", status: "Success" },
-    { id: 2, name: "Priya Singh", amount: "₹2,500", date: "Yesterday", status: "Success" },
-    { id: 3, name: "Amit Kumar", amount: "₹10,000", date: "Aug 29", status: "Success" },
-    { id: 4, name: "Sneha Patel", amount: "₹1,000", date: "Aug 28", status: "Success" },
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('/api/stats');
+        const stats = await res.json();
+        setData(stats);
+      } catch (error) {
+        console.error('Failed to fetch stats:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <Loader2 className="w-8 h-8 animate-spin text-[#0f4a5c]" />
+      </div>
+    );
+  }
+
+  const stats = [
+    { name: "Total Donations", value: `₹${(data?.totalAmount || 0).toLocaleString('en-IN')}`, icon: IndianRupee, color: "bg-emerald-50 text-emerald-600" },
+    { name: "Supporters", value: (data?.totalSupporters || 0).toLocaleString('en-IN'), icon: Heart, color: "bg-rose-50 text-rose-600" },
+    { name: "Published Blogs", value: (data?.totalBlogs || 0).toLocaleString(), icon: FileText, color: "bg-blue-50 text-blue-600" },
+    { name: "Gallery Items", value: (data?.totalGalleryItems || 0).toLocaleString(), icon: ImageIcon, color: "bg-purple-50 text-purple-600" },
   ];
 
   return (
@@ -66,18 +86,31 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {recentDonations.map((donation) => (
+                {data?.recentDonations?.map((donation: any) => (
                   <tr key={donation.id} className="border-b border-gray-50 last:border-0">
                     <td className="py-4 text-sm font-medium text-gray-900">{donation.name}</td>
-                    <td className="py-4 text-sm text-gray-600">{donation.amount}</td>
-                    <td className="py-4 text-sm text-gray-500">{donation.date}</td>
+                    <td className="py-4 text-sm text-gray-600">₹{donation.amount}</td>
+                    <td className="py-4 text-sm text-gray-500">
+                      {new Date(donation.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                    </td>
                     <td className="py-4 text-right">
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
-                        {donation.status}
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                        donation.status === 'SUCCESS' ? 'bg-emerald-50 text-emerald-700' :
+                        donation.status === 'FAILED' ? 'bg-red-50 text-red-700' :
+                        'bg-yellow-50 text-yellow-700'
+                      }`}>
+                        {donation.status || 'PENDING'}
                       </span>
                     </td>
                   </tr>
                 ))}
+                {(!data?.recentDonations || data.recentDonations.length === 0) && (
+                  <tr>
+                    <td colSpan={4} className="py-8 text-center text-gray-500">
+                      No recent donations
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -92,24 +125,24 @@ export default function AdminDashboard() {
         >
           <h2 className="text-lg font-bold text-gray-900 mb-6">Quick Actions</h2>
           <div className="space-y-4">
-            <button className="w-full flex items-center gap-3 p-4 rounded-xl border border-gray-100 hover:border-[#0f4a5c] hover:bg-gray-50 transition-colors text-left group">
+            <a href="/admin/blogs" className="w-full flex items-center gap-3 p-4 rounded-xl border border-gray-100 hover:border-[#0f4a5c] hover:bg-gray-50 transition-colors text-left group block">
               <div className="p-2 bg-[#0f4a5c]/10 text-[#0f4a5c] rounded-lg group-hover:bg-[#0f4a5c] group-hover:text-white transition-colors">
                 <FileText size={20} />
               </div>
               <div>
-                <p className="font-medium text-gray-900">Write Blog Post</p>
-                <p className="text-xs text-gray-500">Create a new update</p>
+                <p className="font-medium text-gray-900">Manage Blogs</p>
+                <p className="text-xs text-gray-500">Create & edit updates</p>
               </div>
-            </button>
-            <button className="w-full flex items-center gap-3 p-4 rounded-xl border border-gray-100 hover:border-[#b8860b] hover:bg-gray-50 transition-colors text-left group">
+            </a>
+            <a href="/admin/gallery" className="w-full flex items-center gap-3 p-4 rounded-xl border border-gray-100 hover:border-[#b8860b] hover:bg-gray-50 transition-colors text-left group block">
               <div className="p-2 bg-[#b8860b]/10 text-[#b8860b] rounded-lg group-hover:bg-[#b8860b] group-hover:text-white transition-colors">
                 <ImageIcon size={20} />
               </div>
               <div>
-                <p className="font-medium text-gray-900">Upload to Gallery</p>
-                <p className="text-xs text-gray-500">Add event photos</p>
+                <p className="font-medium text-gray-900">Manage Gallery</p>
+                <p className="text-xs text-gray-500">Upload event photos</p>
               </div>
-            </button>
+            </a>
           </div>
         </motion.div>
       </div>

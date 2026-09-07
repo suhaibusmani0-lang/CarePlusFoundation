@@ -129,51 +129,54 @@ export async function generateReceipt(
   doc.setLineWidth(0.4);
   doc.rect(margin + 2.5, margin + 2.5, pageWidth - (margin + 2.5) * 2, pageHeight - (margin + 2.5) * 2);
 
-  // Top header banner background
-  doc.setFillColor(teal[0], teal[1], teal[2]);
+  // Top header banner background (White for elegant look)
+  doc.setFillColor(255, 255, 255);
   doc.rect(margin + 3, margin + 3, pageWidth - (margin + 3) * 2, 38, 'F');
+  
+  // Separator line below header
+  doc.setDrawColor(230, 230, 230);
+  doc.setLineWidth(0.5);
+  doc.line(margin + 3, margin + 41, pageWidth - margin - 3, margin + 41);
 
-  // Header Logo
+  // Header Logo (No white box needed now)
   if (base64Logo) {
-    doc.setFillColor(255, 255, 255);
-    doc.roundedRect(margin + 6, margin + 6, 30, 30, 2, 2, 'F');
-    doc.addImage(base64Logo, 'PNG', margin + 8, margin + 8, 26, 26);
+    doc.addImage(base64Logo, 'PNG', margin + 8, margin + 5, 28, 28);
   }
 
   // Header Text
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(teal[0], teal[1], teal[2]);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
-  doc.text('CARE PLUS FOUNDATION TRUST', pageWidth / 2 + 10, margin + 14, { align: 'center' });
+  doc.text('CARE PLUS FOUNDATION TRUST', pageWidth / 2 + 10, margin + 12, { align: 'center' });
 
   doc.setFont('helvetica', 'italic');
   doc.setFontSize(10);
-  doc.setTextColor(230, 200, 120);
-  doc.text('"Together, We Create Change"', pageWidth / 2 + 10, margin + 20, { align: 'center' });
+  doc.setTextColor(gold[0], gold[1], gold[2]);
+  doc.text('"Together, We Create Change"', pageWidth / 2 + 10, margin + 18, { align: 'center' });
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
-  doc.setTextColor(235, 245, 250);
+  doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
   doc.text(
     'Registered under The Charitable and Religious Trust Act, 1920 | Reg No: 2026/10/IV/1162',
     pageWidth / 2 + 10,
-    margin + 27,
+    margin + 25,
     { align: 'center' }
   );
   doc.text(
     'DARPAN ID: DL/2026/1190987 | Email: careplusfoundation19@gmail.com',
     pageWidth / 2 + 10,
-    margin + 32,
+    margin + 30,
     { align: 'center' }
   );
   doc.text(
     'Address: B-6 FIRST FLOOR KALKAJI NEW DELHI-110019',
     pageWidth / 2 + 10,
-    margin + 37,
+    margin + 35,
     { align: 'center' }
   );
 
-  let currentY = margin + 46;
+  let currentY = margin + 50;
 
   // Title Ribbon
   doc.setFillColor(gold[0], gold[1], gold[2]);
