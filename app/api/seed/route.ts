@@ -15,7 +15,7 @@ export async function GET() {
         title: 'Empowering Women Through Skill Development in Rural India',
         content: '<p>At <strong>Care Plus Foundation</strong>, we firmly believe that empowering a woman means empowering an entire generation. Recently, we inaugurated our new stitching and tailoring training center in a marginalized community in Delhi.</p><p>Over 50 women have enrolled in the first batch. Through this 6-month vocational course, they will learn essential skills to start their own micro-businesses or find employment in the textile industry. Financial independence is the first step towards a life of dignity, and we are committed to making this a reality for thousands of women.</p>',
         imageUrl: 'https://images.unsplash.com/photo-1596423735880-5f2a689b903e?q=80&w=800&auto=format&fit=crop',
-        author: 'Lata Kumari',
+        author: 'L.K',
       },
       {
         title: 'Education for All: Our Mission for Underprivileged Children',

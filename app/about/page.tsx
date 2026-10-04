@@ -97,7 +97,7 @@ export default function AboutPage() {
               </div>
               <div className="relative z-10">
                 <p className="text-sm font-bold text-[#b8860b] uppercase tracking-widest mb-1">President</p>
-                <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-2">Lata Kumari</h3>
+                <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-2">L.K</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">Leading the foundation with compassion, dedication, and a vision for universal education.</p>
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function AboutPage() {
               </div>
               <div className="relative z-10">
                 <p className="text-sm font-bold text-[#b8860b] uppercase tracking-widest mb-1">Trustee</p>
-                <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-2">Mukesh</h3>
+                <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-2">M.K</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">Ensuring operational excellence and fostering community relationships for lasting impact.</p>
               </div>
             </div>
