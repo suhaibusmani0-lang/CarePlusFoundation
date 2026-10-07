@@ -1,9 +1,10 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { HeartHandshake, Users, GraduationCap, Globe2, ArrowRight, Play } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const pillars = [
   { title: 'Care', icon: HeartHandshake, desc: 'Nurturing lives', color: 'from-pink-500/80 to-rose-600/80' },
@@ -12,25 +13,49 @@ const pillars = [
   { title: 'Together', icon: Globe2, desc: 'Global community', color: 'from-emerald-500/80 to-teal-600/80' }
 ];
 
+const backgroundImages = [
+  "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070&auto=format&fit=crop", // children
+  "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=2070&auto=format&fit=crop", // community
+  "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2032&auto=format&fit=crop", // education
+];
+
 export default function HeroSection() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
+    }, 5000); // Change image every 5 seconds
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#05161e]">
       
-      {/* --- Background Video --- */}
-      <div className="absolute inset-0 w-full h-full z-0">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="object-cover w-full h-full opacity-60"
-        >
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-group-of-people-joined-in-a-circle-45699-large.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+      {/* --- Sliding Background Images --- */}
+      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={currentImageIndex}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 0.6, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5, ease: 'easeInOut' }}
+            className="absolute inset-0 w-full h-full"
+          >
+            <Image
+              src={backgroundImages[currentImageIndex]}
+              alt="Care Plus Foundation Background"
+              fill
+              className="object-cover"
+              priority
+            />
+          </motion.div>
+        </AnimatePresence>
+        
         {/* Dark Gradient Overlays for Readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#05161e]/90 via-[#05161e]/50 to-[#0f4a5c]/90"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#05161e_100%)] opacity-80"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#05161e]/90 via-[#05161e]/50 to-[#0f4a5c]/90 z-10"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#05161e_100%)] opacity-80 z-10"></div>
       </div>
 
       {/* --- Main Content --- */}
