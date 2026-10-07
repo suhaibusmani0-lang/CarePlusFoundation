@@ -72,6 +72,7 @@ model ScholarshipApplication {
   pin_code            String?
   category            String?
   religion            String?
+  referral_id         String?
 
   razorpay_order_id   String   @unique
   razorpay_payment_id String?  @unique

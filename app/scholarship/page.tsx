@@ -1,20 +1,44 @@
-import Link from 'next/link';
-import { Metadata } from 'next';
+'use client';
 
-export const metadata: Metadata = {
-  title: 'Buniyad Scholarship Examination | Care Plus Foundation',
-  description: 'An Educational Initiative to Identify, Encourage & Reward Student Potential. Scholarships & Prizes Worth ₹25 Lakh.',
-};
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+
+const heroImages = [
+  'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=2070&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop'
+];
 
 export default function ScholarshipLandingPage() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-teal-900 via-teal-800 to-teal-900 text-white py-20 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/20" />
+      <section className="relative bg-teal-900 text-white py-20 px-4 overflow-hidden min-h-[600px] flex items-center justify-center">
+        {heroImages.map((src, index) => (
+          <motion.div
+            key={src}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: index === currentImageIndex ? 0.3 : 0 }}
+            transition={{ duration: 1.5 }}
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${src})` }}
+          />
+        ))}
+        <div className="absolute inset-0 bg-gradient-to-t from-teal-900 via-teal-900/80 to-transparent" />
+        
         <div className="max-w-5xl mx-auto relative z-10 text-center">
           <p className="text-yellow-400 font-bold tracking-widest uppercase mb-4 text-sm md:text-base">Care Plus Foundation Trust</p>
-          <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight drop-shadow-lg">
             BUNIYAD SCHOLARSHIP <br /> EXAMINATION
           </h1>
           <p className="text-xl md:text-2xl font-medium text-teal-100 mb-2">Building the Foundation of a Brighter Future</p>
@@ -28,12 +52,15 @@ export default function ScholarshipLandingPage() {
             <span className="bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20">Registration Fee ₹270</span>
           </div>
 
-          <div className="bg-yellow-500 text-teal-900 inline-block px-8 py-4 rounded-2xl mb-10 shadow-xl transform rotate-1">
+          <motion.div 
+            whileHover={{ scale: 1.05, rotate: -2 }}
+            className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-teal-900 inline-block px-8 py-4 rounded-2xl mb-10 shadow-xl transform rotate-1 cursor-default"
+          >
             <p className="text-2xl md:text-3xl font-black uppercase">Scholarships & Prizes Worth ₹25 Lakh*</p>
-          </div>
+          </motion.div>
 
           <div>
-            <Link href="/scholarship/apply" className="inline-block bg-white text-teal-900 font-bold text-lg px-12 py-4 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all">
+            <Link href="/scholarship/apply" className="inline-block bg-white text-teal-900 font-bold text-lg px-12 py-4 rounded-full shadow-lg hover:shadow-2xl hover:bg-gray-100 hover:scale-105 transition-all">
               REGISTER NOW
             </Link>
           </div>
@@ -180,7 +207,7 @@ export default function ScholarshipLandingPage() {
             </div>
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
               <h3 className="font-bold text-gray-900 text-lg mb-2">What is the registration fee?</h3>
-              <p className="text-gray-600">The registration and examination fee is ₹270, which is to be paid during the online registration process.</p>
+              <p className="text-gray-600">The registration and examination fee is ₹270, which is to be paid during the online registration process. Please note that this fee is non-refundable under any circumstances.</p>
             </div>
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
               <h3 className="font-bold text-gray-900 text-lg mb-2">Does every participant receive a scholarship?</h3>
@@ -201,4 +228,3 @@ export default function ScholarshipLandingPage() {
     </div>
   );
 }
-

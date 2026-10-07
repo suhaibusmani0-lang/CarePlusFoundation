@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 
 export default function ScholarshipApplyPage() {
   const [loading, setLoading] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [formData, setFormData] = useState({
     student_name: '',
     dob: '',
@@ -25,7 +26,8 @@ export default function ScholarshipApplyPage() {
     state: '',
     pin_code: '',
     category: '',
-    religion: ''
+    religion: '',
+    referral_id: ''
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -207,20 +209,36 @@ export default function ScholarshipApplyPage() {
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Religion</label>
                   <input type="text" name="religion" value={formData.religion} onChange={handleInputChange} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition-all" />
                 </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Referral ID (Optional)</label>
+                  <input type="text" name="referral_id" value={formData.referral_id} onChange={handleInputChange} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition-all" placeholder="Enter Referral ID" />
+                </div>
               </div>
             </section>
 
-            <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-8 text-center">
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Registration Fee: ₹270</h3>
+            <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 text-center">
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Registration Fee: ?270</h3>
               <p className="text-gray-600 text-sm">Secure online payment via Razorpay. Your details are safe with us.</p>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-xl p-6 flex flex-col md:flex-row gap-4 items-start md:items-center mt-6 mb-8">
+              <input
+                type="checkbox"
+                id="terms"
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+                className="w-5 h-5 text-teal-600 border-gray-300 rounded focus:ring-teal-500 mt-1 md:mt-0 cursor-pointer"
+              />
+              <label htmlFor="terms" className="text-sm text-gray-600 cursor-pointer leading-relaxed">
+                I have read and agree to the <a href="/terms-and-conditions" target="_blank" className="text-teal-600 font-bold hover:underline">Terms and Conditions</a>. I understand that the registration fee of ?270 is strictly <strong>non-refundable</strong> and non-transferable under any circumstances, and that scholarship allocation is solely based on merit and the foundation's criteria.
+              </label>
+                className="inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-[#b8860b] to-[#d4af37] text-white font-bold rounded-full hover:shadow-lg hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto min-w-[300px]"
             </div>
 
             <div className="text-center">
               <button
                 type="submit"
-                disabled={loading}
-                className="inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-[#b8860b] to-[#d4af37] text-white font-bold rounded-full hover:shadow-lg hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto min-w-[300px]"
-              >
+                disabled={loading || !termsAccepted} className="inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-[#b8860b] to-[#d4af37] text-white font-bold rounded-full hover:shadow-lg hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto min-w-[300px]">
                 {loading ? 'Processing...' : 'Pay ₹270 & Register'}
               </button>
             </div>
@@ -231,4 +249,5 @@ export default function ScholarshipApplyPage() {
     </div>
   );
 }
+
 

@@ -36,7 +36,7 @@ export default function Navbar() {
             <Link href="/blogs" className="text-gray-700 hover:text-[#0f4a5c] font-medium transition-colors">Blogs</Link>
             <Link href="/gallery" className="text-gray-700 hover:text-[#0f4a5c] font-medium transition-colors">Gallery</Link>
             <Link href="/contact" className="text-gray-700 hover:text-[#0f4a5c] font-medium transition-colors">Contact Us</Link>
-            <Link href="/scholarship" className="text-[#b8860b] font-bold hover:text-[#0f4a5c] transition-colors">Buniyad Scholarship</Link>
+            <Link href="/scholarship" className="text-[#b8860b] font-bold hover:text-[#0f4a5c] transition-colors relative flex items-center">Buniyad Scholarship <span className="ml-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded animate-pulse">NEW</span></Link>
             <Link href="/donate">
               <motion.button 
                 whileHover={{ scale: 1.05 }}
@@ -69,7 +69,7 @@ export default function Navbar() {
           <Link href="/blogs" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">Blogs</Link>
           <Link href="/gallery" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">Gallery</Link>
           <Link href="/contact" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-medium">Contact Us</Link>
-          <Link href="/scholarship" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-[#b8860b] hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-bold">Buniyad Scholarship</Link>
+          <Link href="/scholarship" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-[#b8860b] hover:bg-gray-50 hover:text-[#0f4a5c] rounded-md font-bold flex items-center justify-between">Buniyad Scholarship <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded animate-pulse">NEW</span></Link>
           <Link href="/donate" onClick={() => setIsOpen(false)} className="block px-3 py-2">
             <button className="w-full bg-gradient-to-r from-[#b8860b] to-[#daa520] text-white px-6 py-2 rounded-full font-semibold">
               Donate Now

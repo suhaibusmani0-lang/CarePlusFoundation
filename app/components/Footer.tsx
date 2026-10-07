@@ -131,7 +131,7 @@ export default function Footer() {
           </p>
           <div className="flex space-x-6 text-sm text-gray-400">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link href="/terms-and-conditions" className="hover:text-white transition-colors">Terms of Service</Link>
             <Link href="/admin/login" className="hover:text-white transition-colors opacity-50 hover:opacity-100 flex items-center">
               <span className="w-1.5 h-1.5 bg-[#b8860b] rounded-full mr-2"></span>
               Admin

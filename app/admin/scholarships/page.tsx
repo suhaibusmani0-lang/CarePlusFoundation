@@ -69,8 +69,8 @@ export default function AdminScholarships() {
                   <th className="px-6 py-4">Enrollment No.</th>
                   <th className="px-6 py-4">Student Name</th>
                   <th className="px-6 py-4">Class</th>
-                  <th className="px-6 py-4">School</th>
                   <th className="px-6 py-4">Parent Mobile</th>
+                  <th className="px-6 py-4">Referral ID</th>
                   <th className="px-6 py-4">Status</th>
                   <th className="px-6 py-4">Reg. Date</th>
                 </tr>
@@ -94,11 +94,11 @@ export default function AdminScholarships() {
                       <td className="px-6 py-4">
                         {app.class} {app.section ? `(${app.section})` : ''}
                       </td>
-                      <td className="px-6 py-4 max-w-[200px] truncate" title={app.school_name}>
-                        {app.school_name}
-                      </td>
                       <td className="px-6 py-4">
                         {app.parent_mobile}
+                      </td>
+                      <td className="px-6 py-4 font-mono text-gray-600">
+                        {app.referral_id || '-'}
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
@@ -125,3 +125,4 @@ export default function AdminScholarships() {
     </div>
   );
 }
+

@@ -43,6 +43,7 @@ export async function POST(req: Request) {
         pin_code: data.pin_code || null,
         category: data.category || null,
         religion: data.religion || null,
+        referral_id: data.referral_id || null,
         razorpay_order_id: order.id,
         amount: 270,
         status: 'PENDING'
