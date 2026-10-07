@@ -50,3 +50,33 @@ model GalleryItem {
   imageUrl  String
   createdAt DateTime @default(now())
 }
+model ScholarshipApplication {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  student_name        String
+  dob                 String
+  gender              String
+  class               String
+  section             String?
+  school_name         String
+  school_address      String?
+  student_mobile      String?
+  
+  parent_name         String
+  mother_name         String?
+  parent_mobile       String
+  email               String?
+  address             String
+  city                String?
+  state               String?
+  pin_code            String?
+  category            String?
+  religion            String?
+
+  razorpay_order_id   String   @unique
+  razorpay_payment_id String?  @unique
+  status              Status   @default(PENDING)
+  amount              Float    @default(270)
+  
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+}
