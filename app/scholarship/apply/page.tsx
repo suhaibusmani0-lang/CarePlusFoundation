@@ -66,7 +66,7 @@ export default function ScholarshipApplyPage() {
           });
           const verifyData = await verifyRes.json();
           if (verifyRes.ok) {
-            window.location.href = `/scholarship/success?student_name=${formData.student_name}&paymentId=${response.razorpay_payment_id}`;
+            window.location.href = `/scholarship/success?student_name=${formData.student_name}&paymentId=${response.razorpay_payment_id}&enrollmentNumber=${data.enrollment_number}`;
           } else {
             alert('Payment verification failed!');
           }
@@ -231,3 +231,4 @@ export default function ScholarshipApplyPage() {
     </div>
   );
 }
+

@@ -60,6 +60,7 @@ model ScholarshipApplication {
   school_name         String
   school_address      String?
   student_mobile      String?
+  enrollment_number   String?  @unique
   
   parent_name         String
   mother_name         String?

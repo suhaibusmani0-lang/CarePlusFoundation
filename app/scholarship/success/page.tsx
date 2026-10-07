@@ -10,6 +10,7 @@ function SuccessContent() {
   const searchParams = useSearchParams();
   const student_name = searchParams.get('student_name') || 'Student';
   const paymentId = searchParams.get('paymentId');
+  const enrollmentNumber = searchParams.get('enrollmentNumber');
 
   return (
     <div className="bg-white rounded-3xl shadow-xl p-10 max-w-lg w-full text-center">
@@ -23,9 +24,17 @@ function SuccessContent() {
       </motion.div>
 
       <h1 className="text-3xl font-black text-gray-900 mb-4">Registration Successful!</h1>
-      <p className="text-lg text-gray-600 mb-8">
+      <p className="text-lg text-gray-600 mb-6">
         Thank you, <span className="font-bold text-gray-800">{student_name}</span>. Your registration for the Buniyad Scholarship Exam 2026–27 has been confirmed.
       </p>
+
+      {enrollmentNumber && (
+        <div className="bg-teal-50 border-2 border-teal-200 rounded-xl p-6 mb-8">
+          <p className="text-sm text-teal-800 font-bold uppercase tracking-wider mb-1">Your Enrollment Number</p>
+          <p className="text-3xl font-black text-teal-900">{enrollmentNumber}</p>
+          <p className="text-xs text-teal-700 mt-2">Please keep this number safe for future reference.</p>
+        </div>
+      )}
 
       {paymentId && (
         <div className="bg-gray-50 rounded-lg p-4 mb-8 text-sm text-gray-500">
@@ -54,3 +63,4 @@ export default function ScholarshipSuccessPage() {
     </div>
   );
 }
+

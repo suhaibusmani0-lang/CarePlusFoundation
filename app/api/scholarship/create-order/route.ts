@@ -18,9 +18,13 @@ export async function POST(req: Request) {
       receipt: `buniyaad_${Date.now()}`,
     });
 
+    // Generate a unique enrollment number (e.g., BSE26-123456)
+    const enrollment_number = 'BSE26-' + Math.floor(100000 + Math.random() * 900000).toString();
+
     // Save initial application in DB
     const application = await prisma.scholarshipApplication.create({
       data: {
+        enrollment_number,
         student_name: data.student_name,
         dob: data.dob,
         gender: data.gender,
@@ -45,9 +49,10 @@ export async function POST(req: Request) {
       }
     });
 
-    return NextResponse.json({ order, application_id: application.id });
+    return NextResponse.json({ order, application_id: application.id, enrollment_number });
   } catch (error: any) {
     console.error('Error creating order:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
