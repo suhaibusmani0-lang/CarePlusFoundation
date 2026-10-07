@@ -10,6 +10,7 @@ import {
   FileText, 
   Image as ImageIcon, 
   LogOut,
+  GraduationCap,
   Menu,
   X
 } from "lucide-react";
@@ -25,6 +26,7 @@ export default function AdminLayoutClient({ children }: { children: React.ReactN
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Donations", href: "/admin/donations", icon: Heart },
+    { name: "Scholarships", href: "/admin/scholarships", icon: GraduationCap },
     { name: "Blogs", href: "/admin/blogs", icon: FileText },
     { name: "Gallery", href: "/admin/gallery", icon: ImageIcon },
   ];
