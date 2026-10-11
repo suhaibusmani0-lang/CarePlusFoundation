@@ -118,7 +118,7 @@ export default function ScholarshipLandingPage() {
                 </tr>
                 <tr className="hover:bg-gray-50">
                   <td className="py-4 px-6 font-bold text-gray-700">Registration Fee</td>
-                  <td className="py-4 px-6 text-gray-600">₹270</td>
+                  <td className="py-4 px-6 text-gray-600">₹299</td>
                 </tr>
                 <tr className="bg-teal-50">
                   <td className="py-4 px-6 font-bold text-teal-900">Scholarship Opportunity</td>

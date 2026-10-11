@@ -11,9 +11,9 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
     
-    // Create razorpay order for ₹270
+    // Create razorpay order for ₹299
     const order = await razorpay.orders.create({
-      amount: 270 * 100, // in paise
+      amount: 299 * 100, // in paise
       currency: 'INR',
       receipt: `buniyaad_${Date.now()}`,
     });
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
         religion: data.religion || null,
         referral_id: data.referral_id || null,
         razorpay_order_id: order.id,
-        amount: 270,
+        amount: 299,
         status: 'PENDING'
       }
     });

@@ -216,7 +216,7 @@ export default function ScholarshipApplyPage() {
             </section>
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 text-center">
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Registration Fee: ₹270</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Registration Fee: ₹299</h3>
               <p className="text-gray-600 text-sm">Secure online payment via Razorpay. Your details are safe with us.</p>
             </div>
 
@@ -229,7 +229,7 @@ export default function ScholarshipApplyPage() {
                 className="w-5 h-5 text-teal-600 border-gray-300 rounded focus:ring-teal-500 mt-1 md:mt-0 cursor-pointer"
               />
               <label htmlFor="terms" className="text-sm text-gray-600 cursor-pointer leading-relaxed">
-                I have read and agree to the <a href="/terms-and-conditions" target="_blank" className="text-teal-600 font-bold hover:underline">Terms and Conditions</a>. I understand that the registration fee of ₹270 is strictly <strong>non-refundable</strong> and non-transferable under any circumstances, and that scholarship allocation is solely based on merit and the foundation's criteria.
+                I have read and agree to the <a href="/terms-and-conditions" target="_blank" className="text-teal-600 font-bold hover:underline">Terms and Conditions</a>. I understand that the registration fee of ₹299 is strictly <strong>non-refundable</strong> and non-transferable under any circumstances, and that scholarship allocation is solely based on merit and the foundation's criteria.
               </label>
             </div>
 
@@ -239,7 +239,7 @@ export default function ScholarshipApplyPage() {
                 disabled={loading || !termsAccepted}
                 className="inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-[#b8860b] to-[#d4af37] text-white font-bold rounded-full hover:shadow-lg hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto min-w-[300px]"
               >
-                {loading ? 'Processing...' : 'Pay ₹270 & Register'}
+                {loading ? 'Processing...' : 'Pay ₹299 & Register'}
               </button>
             </div>
 
