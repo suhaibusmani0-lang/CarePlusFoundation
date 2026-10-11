@@ -14,6 +14,7 @@ const slides = [
     link: '/scholarship',
     width: 1024,
     height: 576,
+    aspect: '1024 / 576',
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const slides = [
     link: '/scholarship',
     width: 1024,
     height: 712,
+    aspect: '1024 / 712',
   },
   {
     id: 3,
@@ -30,6 +32,7 @@ const slides = [
     link: '/scholarship',
     width: 1024,
     height: 817,
+    aspect: '1024 / 817',
   },
   {
     id: 4,
@@ -38,6 +41,7 @@ const slides = [
     link: '/about',
     width: 1024,
     height: 682,
+    aspect: '1024 / 682',
   },
 ];
 
@@ -72,74 +76,80 @@ export default function HeroSection() {
   const currentSlide = slides[currentIndex];
 
   return (
-    <section className="relative w-full bg-[#0a1820] overflow-hidden select-none">
-      <div className="relative w-full max-w-7xl mx-auto flex items-center justify-center">
-        <Link 
-          href={currentSlide.link} 
-          className="block relative w-full group cursor-pointer focus:outline-none" 
-          aria-label={currentSlide.alt}
+    <section className="relative w-full bg-white select-none overflow-hidden">
+      <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 py-2 sm:py-4">
+        
+        {/* Banner Container with dynamic natural aspect ratio */}
+        <div 
+          className="relative w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-lg border border-gray-100 transition-[aspect-ratio] duration-500 ease-in-out"
+          style={{ aspectRatio: currentSlide.aspect }}
         >
-          <div className="relative w-full flex items-center justify-center min-h-[260px] sm:min-h-[400px] md:min-h-[500px] lg:min-h-[620px] bg-black/40">
+          <Link 
+            href={currentSlide.link} 
+            className="block w-full h-full relative cursor-pointer focus:outline-none" 
+            aria-label={currentSlide.alt}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.01 }}
-                transition={{ duration: 0.6, ease: 'easeInOut' }}
-                className="relative w-full flex justify-center items-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.45, ease: 'easeInOut' }}
+                className="relative w-full h-full"
               >
                 <Image
                   src={currentSlide.src}
                   alt={currentSlide.alt}
-                  width={currentSlide.width}
-                  height={currentSlide.height}
+                  fill
                   priority
                   sizes="(max-width: 1280px) 100vw, 1280px"
-                  className="w-full max-h-[82vh] object-contain block mx-auto drop-shadow-2xl"
+                  className="w-full h-full object-fill block"
                 />
               </motion.div>
             </AnimatePresence>
+          </Link>
+
+          {/* Previous Button */}
+          <button
+            onClick={handlePrev}
+            aria-label="Previous slide"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-black/45 hover:bg-black/75 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-md hover:scale-105 active:scale-95"
+          >
+            <ChevronLeft size={22} />
+          </button>
+
+          {/* Next Button */}
+          <button
+            onClick={handleNext}
+            aria-label="Next slide"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-black/45 hover:bg-black/75 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-md hover:scale-105 active:scale-95"
+          >
+            <ChevronRight size={22} />
+          </button>
+
+          {/* Dots Indicator */}
+          <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3.5 py-1.5 rounded-full">
+            {slides.map((slide, idx) => (
+              <button
+                key={slide.id}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  goToSlide(idx);
+                }}
+                aria-label={`Go to slide ${idx + 1}`}
+                className={`transition-all duration-300 rounded-full ${
+                  currentIndex === idx
+                    ? 'w-6 sm:w-7 h-2 bg-[#ffd700] shadow-sm shadow-amber-300'
+                    : 'w-2 h-2 bg-white/60 hover:bg-white/90'
+                }`}
+              />
+            ))}
           </div>
-        </Link>
 
-        {/* Previous Button */}
-        <button
-          onClick={handlePrev}
-          aria-label="Previous slide"
-          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-md transition-all opacity-80 hover:opacity-100 hover:scale-105"
-        >
-          <ChevronLeft size={24} />
-        </button>
-
-        {/* Next Button */}
-        <button
-          onClick={handleNext}
-          aria-label="Next slide"
-          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-md transition-all opacity-80 hover:opacity-100 hover:scale-105"
-        >
-          <ChevronRight size={24} />
-        </button>
-
-        {/* Navigation Indicator Dots */}
-        <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full">
-          {slides.map((slide, idx) => (
-            <button
-              key={slide.id}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                goToSlide(idx);
-              }}
-              aria-label={`Go to slide ${idx + 1}`}
-              className={`transition-all duration-300 rounded-full ${
-                currentIndex === idx
-                  ? 'w-7 sm:w-8 h-2 sm:h-2.5 bg-[#ffd700] shadow-md shadow-amber-400/50'
-                  : 'w-2 sm:w-2.5 h-2 sm:h-2.5 bg-white/50 hover:bg-white/90'
-              }`}
-            />
-          ))}
         </div>
+
       </div>
     </section>
   );
