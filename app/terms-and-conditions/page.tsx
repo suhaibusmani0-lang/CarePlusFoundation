@@ -21,7 +21,7 @@ export default function TermsAndConditions() {
               Organised by Care Plus Foundation Trust
             </span>
             <span className="bg-amber-50 text-amber-800 px-3.5 py-1.5 rounded-full border border-amber-200">
-              Card Fee: ₹299
+              Card Fee: ₹199
             </span>
             <span className="bg-gray-100 text-gray-800 px-3.5 py-1.5 rounded-full border border-gray-200">
               Validity: 1 Year

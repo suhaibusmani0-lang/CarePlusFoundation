@@ -28,7 +28,7 @@ const slides = [
   {
     id: 3,
     src: '/hero-slide-3.jpg',
-    alt: 'ML Medo Medical Benefit Card Special Offer for Students ₹299',
+    alt: 'ML Medo Medical Benefit Card Special Offer for Students ₹199',
     link: '/scholarship',
     width: 1024,
     height: 817,

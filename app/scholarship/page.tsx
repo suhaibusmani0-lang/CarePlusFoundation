@@ -49,7 +49,7 @@ export default function ScholarshipLandingPage() {
           <div className="flex flex-wrap justify-center gap-4 mb-10 text-sm md:text-base font-semibold">
             <span className="bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20">Class 1 to Class 12</span>
             <span className="bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20">Offline Examination</span>
-            <span className="bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20">Registration Fee ₹270</span>
+            <span className="bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/20">Registration Fee ₹199</span>
           </div>
 
           <motion.div 
@@ -118,7 +118,7 @@ export default function ScholarshipLandingPage() {
                 </tr>
                 <tr className="hover:bg-gray-50">
                   <td className="py-4 px-6 font-bold text-gray-700">Registration Fee</td>
-                  <td className="py-4 px-6 text-gray-600">₹299</td>
+                  <td className="py-4 px-6 text-gray-600">₹199</td>
                 </tr>
                 <tr className="bg-teal-50">
                   <td className="py-4 px-6 font-bold text-teal-900">Scholarship Opportunity</td>
@@ -171,7 +171,7 @@ export default function ScholarshipLandingPage() {
             <div className="bg-teal-800 p-6 rounded-2xl border border-teal-700">
               <span className="text-yellow-400 font-black text-lg block mb-2">STEP 2</span>
               <h3 className="font-bold mb-2">Fill Form & Pay</h3>
-              <p className="text-teal-100 text-sm">Enter student details carefully and pay the ₹270 registration fee.</p>
+              <p className="text-teal-100 text-sm">Enter student details carefully and pay the ₹199 registration fee.</p>
             </div>
             <div className="bg-teal-800 p-6 rounded-2xl border border-teal-700">
               <span className="text-yellow-400 font-black text-lg block mb-2">STEP 3</span>
@@ -207,7 +207,7 @@ export default function ScholarshipLandingPage() {
             </div>
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
               <h3 className="font-bold text-gray-900 text-lg mb-2">What is the registration fee?</h3>
-              <p className="text-gray-600">The registration and examination fee is ₹270, which is to be paid during the online registration process. Please note that this fee is non-refundable under any circumstances.</p>
+              <p className="text-gray-600">The registration and examination fee is ₹199, which is to be paid during the online registration process. Please note that this fee is non-refundable under any circumstances.</p>
             </div>
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
               <h3 className="font-bold text-gray-900 text-lg mb-2">Does every participant receive a scholarship?</h3>
