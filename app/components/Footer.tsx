@@ -42,6 +42,7 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { name: 'Home', href: '/' },
+                { name: 'Buniyad Scholarship', href: '/scholarship' },
                 { name: 'About Us', href: '/about' },
                 { name: 'Blogs', href: '/blogs' },
                 { name: 'Gallery', href: '/gallery' },

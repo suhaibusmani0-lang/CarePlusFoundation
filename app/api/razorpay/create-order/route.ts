@@ -3,9 +3,16 @@ import Razorpay from 'razorpay';
 import prisma from '@/lib/prisma';
 
 function getRazorpay() {
+  const key_id = process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+  const key_secret = process.env.RAZORPAY_KEY_SECRET;
+
+  if (!key_id || !key_secret) {
+    throw new Error('Razorpay keys are not configured properly');
+  }
+
   return new Razorpay({
-    key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
-    key_secret: process.env.RAZORPAY_KEY_SECRET!,
+    key_id,
+    key_secret,
   });
 }
 
@@ -30,7 +37,10 @@ export async function POST(req: Request) {
     await prisma.donation.create({
       data: { donor_id: donor.id, amount: Number(amount), razorpay_order_id: order.id, status: 'PENDING' },
     });
-    return NextResponse.json({ order });
+    return NextResponse.json({ 
+      order,
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID
+    });
   } catch (error: any) {
     console.error('Error creating order:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });

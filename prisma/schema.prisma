@@ -23,7 +23,7 @@ model Donation {
   donor               Donor    @relation(fields: [donor_id], references: [id])
   amount              Float
   razorpay_order_id   String   @unique
-  razorpay_payment_id String?  @unique
+  razorpay_payment_id String?
   status              Status   @default(PENDING)
   created_at          DateTime @default(now())
 }
@@ -75,7 +75,7 @@ model ScholarshipApplication {
   referral_id         String?
 
   razorpay_order_id   String   @unique
-  razorpay_payment_id String?  @unique
+  razorpay_payment_id String?
   status              Status   @default(PENDING)
   amount              Float    @default(199)
   

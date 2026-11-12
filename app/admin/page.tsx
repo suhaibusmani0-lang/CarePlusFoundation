@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Heart, FileText, ImageIcon, IndianRupee, Loader2 } from "lucide-react";
+import { Heart, FileText, ImageIcon, IndianRupee, Loader2, GraduationCap } from "lucide-react";
 
 export default function AdminDashboard() {
   const [data, setData] = useState<any>(null);
@@ -33,6 +33,7 @@ export default function AdminDashboard() {
 
   const stats = [
     { name: "Total Donations", value: `₹${(data?.totalAmount || 0).toLocaleString('en-IN')}`, icon: IndianRupee, color: "bg-emerald-50 text-emerald-600" },
+    { name: "Scholarships", value: (data?.totalScholarships || 0).toLocaleString('en-IN'), icon: GraduationCap, color: "bg-amber-50 text-amber-600" },
     { name: "Supporters", value: (data?.totalSupporters || 0).toLocaleString('en-IN'), icon: Heart, color: "bg-rose-50 text-rose-600" },
     { name: "Published Blogs", value: (data?.totalBlogs || 0).toLocaleString(), icon: FileText, color: "bg-blue-50 text-blue-600" },
     { name: "Gallery Items", value: (data?.totalGalleryItems || 0).toLocaleString(), icon: ImageIcon, color: "bg-purple-50 text-purple-600" },
@@ -41,7 +42,7 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {stats.map((stat, index) => (
           <motion.div
             key={stat.name}

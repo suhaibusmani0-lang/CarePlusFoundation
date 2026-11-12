@@ -48,28 +48,61 @@ export default function ScholarshipApplyPage() {
 
       if (!res.ok) throw new Error(data.error || 'Failed to create order');
 
+      const razorpayKey = data.key || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+
+      if (typeof window === 'undefined' || !(window as any).Razorpay) {
+        throw new Error('Payment gateway is loading. Please check your internet connection and try again in a few seconds.');
+      }
+
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        key: razorpayKey,
         amount: data.order.amount,
         currency: data.order.currency,
         name: 'Care Plus Foundation',
         description: 'Buniyad Scholarship Registration Fee',
         order_id: data.order.id,
         handler: async function (response: any) {
-          const verifyRes = await fetch('/api/scholarship/verify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-            }),
-          });
-          const verifyData = await verifyRes.json();
-          if (verifyRes.ok) {
-            window.location.href = `/scholarship/success?student_name=${formData.student_name}&paymentId=${response.razorpay_payment_id}&enrollmentNumber=${data.enrollment_number}`;
-          } else {
-            alert('Payment verification failed!');
+          try {
+            const verifyRes = await fetch('/api/scholarship/verify', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              }),
+            });
+            const verifyData = await verifyRes.json();
+            if (verifyRes.ok) {
+              if (typeof window !== 'undefined') {
+                try {
+                  const savedApp = verifyData.application || {
+                    ...formData,
+                    enrollment_number: data.enrollment_number,
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    amount: 199,
+                    status: 'SUCCESS',
+                    created_at: new Date().toISOString(),
+                  };
+                  sessionStorage.setItem('current_scholarship_app', JSON.stringify(savedApp));
+                } catch (storageErr) {
+                  console.warn('Storage save error:', storageErr);
+                }
+              }
+
+              const query = new URLSearchParams({
+                student_name: formData.student_name,
+                paymentId: response.razorpay_payment_id || '',
+                enrollmentNumber: data.enrollment_number || '',
+              }).toString();
+              window.location.href = `/scholarship/success?${query}`;
+            } else {
+              alert(verifyData.error || 'Payment verification failed!');
+            }
+          } catch (verErr: any) {
+            console.error('Verification error:', verErr);
+            alert('Failed to verify payment status. If your payment was deducted, please contact support with your payment ID.');
           }
         },
         prefill: {
@@ -84,7 +117,7 @@ export default function ScholarshipApplyPage() {
 
       const rzp1 = new (window as any).Razorpay(options);
       rzp1.on('payment.failed', function (response: any) {
-        alert(response.error.description);
+        alert(response.error?.description || 'Payment failed. Please try again.');
       });
       rzp1.open();
     } catch (error: any) {

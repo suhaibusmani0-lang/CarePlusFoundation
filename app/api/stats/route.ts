@@ -21,7 +21,10 @@ export async function GET() {
     // 4. Gallery Items
     const totalGalleryItems = await prisma.galleryItem.count();
 
-    // 5. Recent Donations
+    // 5. Total Scholarships
+    const totalScholarships = await prisma.scholarshipApplication.count();
+
+    // 6. Recent Donations
     const recentDonations = await prisma.donation.findMany({
       take: 5,
       orderBy: { created_at: 'desc' },
@@ -33,6 +36,7 @@ export async function GET() {
       totalSupporters,
       totalBlogs,
       totalGalleryItems,
+      totalScholarships,
       recentDonations: recentDonations.map(d => ({
         id: d.id,
         name: d.donor?.name || 'Unknown',
