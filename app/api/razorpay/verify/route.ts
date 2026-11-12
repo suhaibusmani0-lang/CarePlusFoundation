@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import crypto from 'crypto';
+import { sendDonationConfirmationEmail } from '@/lib/email';
 
 export async function POST(req: Request) {
   try {
@@ -8,10 +9,18 @@ export async function POST(req: Request) {
     const sign = razorpay_order_id + '|' + razorpay_payment_id;
     const expectedSign = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!).update(sign).digest('hex');
     if (razorpay_signature === expectedSign) {
-      await prisma.donation.update({
+      const updatedDonation = await prisma.donation.update({
         where: { razorpay_order_id },
         data: { razorpay_payment_id, status: 'SUCCESS' },
+        include: { donor: true },
       });
+
+      if (updatedDonation && updatedDonation.donor) {
+        sendDonationConfirmationEmail(updatedDonation, updatedDonation.donor).catch((mailErr) => {
+          console.error('Background donation email error:', mailErr);
+        });
+      }
+
       return NextResponse.json({ message: 'Payment verified successfully' });
     } else {
       return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import crypto from 'crypto';
+import { sendScholarshipConfirmationEmail } from '@/lib/email';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,6 +24,12 @@ export async function POST(req: Request) {
         where: { razorpay_order_id },
         data: { razorpay_payment_id, status: 'SUCCESS' },
       });
+
+      // Send confirmation email to student/parent and admin in background
+      sendScholarshipConfirmationEmail(updated).catch((mailErr) => {
+        console.error('Background scholarship email error:', mailErr);
+      });
+
       return NextResponse.json({ 
         message: 'Payment verified successfully',
         application: updated
