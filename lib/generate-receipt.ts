@@ -344,7 +344,7 @@ export async function generateReceipt(
   doc.setFontSize(8.5);
   doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
 
-  doc.text('Lata Kumari', margin + 20, currentY + 12, { align: 'center' });
+  doc.text('K.L', margin + 20, currentY + 12, { align: 'center' });
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7.5);
   doc.setTextColor(mutedGray[0], mutedGray[1], mutedGray[2]);
@@ -354,7 +354,7 @@ export async function generateReceipt(
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8.5);
   doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
-  doc.text('Mukesh', pageWidth / 2, currentY + 12, { align: 'center' });
+  doc.text('M.K', pageWidth / 2, currentY + 12, { align: 'center' });
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7.5);
   doc.setTextColor(mutedGray[0], mutedGray[1], mutedGray[2]);
